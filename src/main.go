@@ -228,6 +228,51 @@ func testMap()  {
 	countryMap = make(map[string]string)
 	fmt.Println(countryMap)
 }
+// 结构体
+type Teacher struct {
+	name string
+	age int8
+	sex byte
+}
+
+// 结构体的匿名字段
+type User struct {
+	string
+	int8
+}
+
+// 结构体嵌套
+type Address struct {
+	province, city string
+}
+
+type Person struct {
+	name string
+	age int8
+	address *Address
+}
+
+// 采用匿名字段模拟继承关系
+type Student struct {
+	Person
+	schoolName string
+}
+
+type Employee struct {
+	name,currency string
+	salary float64
+}
+
+// 方法
+func (e Employee)printSalary()  {
+	fmt.Printf("员工姓名：%s, 薪资：%s%.2f \n", e.name, e.currency, e.salary)
+}
+
+// 函数
+func printSalary(e Employee) {
+	fmt.Printf("员工姓名：%s, 薪资：%s%.2f \n", e.name, e.currency, e.salary)
+}
+
 /**
 只有package名称为main的包可以包含main()函数。
 func main()是程序入口。所有Go函数以关键字func开头，每一个可执行程序都必须包含main()函数，通常是程序启动后第一个执行的函数
@@ -292,7 +337,68 @@ func main()  {
 
 	//testArray()
 	//testSlice()
-	testMap()
-	
+	//testMap()
+
+	// 实例化结构体1
+	//var t1 Teacher
+	//fmt.Println(t1)
+	//
+	//t1.name = "Steven"
+	//t1.age = 11
+	//t1.sex = 1
+	//fmt.Println(t1)
+	//
+	//// 实例化结构体2
+	//t2 := Teacher{}
+	//t2.name = "Steven1"
+	//t2.age = 12
+	//t2.sex = 2
+	//fmt.Println(t2)
+	//
+	//// 实例化结构体3
+	//t3 := Teacher{
+	//	name: "harden",
+	//	age: 32,
+	//	sex: 1,
+	//}
+	//
+	//fmt.Println(t3)
+	//
+	//// 实例化结构体4
+	//t4 := Teacher{ "iven",32,1}
+	//fmt.Println(t4)
+
+
+	// 匿名结构体 这个相比Java就简洁的多，在定义接口返回值时，可以不用去定义一个类
+	//addr := struct {
+	//	province, city string
+	//}{"陕西", "西安"}
+	//fmt.Println(addr)
+	//
+	//// 结构体的匿名字段
+	//user := User{"苏雄伟", 26}
+	//fmt.Println(user)
+
+	// 测试结构体嵌套
+	//person := Person{}
+	//person.name = "蔡虚空"
+	//person.age = 11
+	//
+	//address := Address{city: "徐州", province: "江苏"}
+	//person.address = &address
+	//fmt.Println(person)
+	//fmt.Println(person.address.province)
+
+	// 测试继承
+	//student := Student{}
+	//student.Person = person
+	//student.schoolName = "CUMT"
+	//fmt.Println(student)
+
+	// 测试函数与方法
+	empl := Employee{"Giao", "$", 100}
+	printSalary(empl)
+	empl.printSalary()
+
 }
 
