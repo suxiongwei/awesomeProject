@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"time"
+	"os"
 )
 
 // 有init()函数则会先执行init()函数
@@ -273,6 +275,116 @@ func printSalary(e Employee) {
 	fmt.Printf("员工姓名：%s, 薪资：%s%.2f \n", e.name, e.currency, e.salary)
 }
 
+// 接口
+type Phone interface {
+	call()
+}
+
+type AndroidPhone struct {
+}
+
+type Iphone struct {
+}
+
+func (a AndroidPhone) call()  {
+	fmt.Println("我是安卓手机 我信号牛皮")
+}
+
+func (a Iphone) call()  {
+	fmt.Println("我是苹果手机 我信号垃圾")
+}
+
+// 测试异常
+func testError()  {
+	res, err := Divide(100, 0)
+	if err != nil{
+		fmt.Println(err)
+	}else {
+		fmt.Println(res)
+	}
+}
+
+func Divide(dividee float64, divider float64)(float64, error)  {
+	if divider == 0{
+		//return 0, errors.New("出错，除数不可以为0")
+		return 0, MyError{time.Now(), "出错，除数不可以为0"}
+	}else {
+		return dividee /divider, nil
+	}
+}
+
+// 测试自定义异常 定义结构体 表示自定义的异常
+type MyError struct {
+	when time.Time
+	what string
+}
+
+func (e MyError) Error() string {
+	return fmt.Sprintf("%v:%v", e.when, e.what)
+}
+
+// 测试defer
+func testDefer()  {
+	defer funA()
+	funB()
+	defer funC()
+	fmt.Println("testDefer执行结束")
+}
+
+func funA()  {
+	fmt.Println("这是funA")
+}
+func funB()  {
+	fmt.Println("这是funB")
+}
+func funC()  {
+	fmt.Println("这是funC")
+}
+
+// 测试defer参数,延迟函数的参数在执行延迟语句时被执行，而不是在执行实际的函数调用时执行。
+func testDeferParameter()  {
+	a := 1
+	b := 2
+	// 执行延迟函数的时候 a,b 分别未1，2 而不是实际调用的时候复制未11，12
+	defer printAdd(a, b, true)
+
+	a = 11
+	b = 12
+	printAdd(a, b, false)
+}
+
+func printAdd(a, b int, flag bool)  {
+	if flag {
+		fmt.Println("延迟执行函数，参数a，b分别为%d,%d", a, b)
+	}else {
+		fmt.Println("未延迟执行函数，参数a，b分别为%d,%d", a, b)
+	}
+}
+
+func testPanic()  {
+	fmt.Println("Hello, World!")
+	panic("发生致命错误")
+	fmt.Println("over")
+}
+
+func testRecover()  {
+	defer func() {
+		if msg := recover(); msg != nil {
+			fmt.Println("恢复啦，获取recover的返回值:", msg)
+		}
+	}()
+	fmt.Println("testRecover")
+
+	for i := 0; i < 10; i++{
+		fmt.Println("当前i值", i)
+
+		if i == 5 {
+			panic("testRecover 恐慌了")
+		}
+	}
+}
+
+
 /**
 只有package名称为main的包可以包含main()函数。
 func main()是程序入口。所有Go函数以关键字func开头，每一个可执行程序都必须包含main()函数，通常是程序启动后第一个执行的函数
@@ -396,9 +508,42 @@ func main()  {
 	//fmt.Println(student)
 
 	// 测试函数与方法
-	empl := Employee{"Giao", "$", 100}
-	printSalary(empl)
-	empl.printSalary()
+	//empl := Employee{"Giao", "$", 100}
+	//printSalary(empl)
+	//empl.printSalary()
 
+	// 测试接口
+	//var phone Phone
+	//phone = new(AndroidPhone)
+	//phone.call()
+
+	// 测试异常
+	//testError()
+
+	/**
+	测试defer,程序输出：
+	这是funB
+	testDefer执行结束
+	这是funC
+	这是funA
+	*/
+	//testDefer()
+
+	// 测试defer参数
+	//testDeferParameter()
+
+	// 测试panic
+	//testPanic()
+
+	//testRecover()
+
+	// 创建目录
+	fileName := "/Users/smzdm/Desktop/test"
+	err := os.Mkdir(fileName, os.ModePerm)
+	if err != nil{
+		fmt.Println("err:", err.Error())
+	}else {
+		fmt.Println("创建目录成功")
+	}
 }
 

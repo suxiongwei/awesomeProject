@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 )
@@ -138,6 +139,50 @@ func removeDuplicates(nums []int) ([]int, int)  {
 	return nums, len(nums)
 }
 
+/**
+给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+ */
+func plusOne(digits []int) []int  {
+	var result []int
+	addon := 0
+	for i := len(digits) - 1; i >= 0; i-- {
+		digits[i] += addon
+		addon = 0
+		if i == len(digits) -1 {
+			digits[i]++
+		}
+		if digits[i] == 10{
+			addon = 1
+			digits[i] = digits[i] % 10
+		}
+	}
+	// 数组元素循环完之后 addon = 1代表还需要进位
+	if addon == 1{
+		result = make([]int, 1)
+		result[0] = 1
+		result = append(result, digits...)
+	}else {
+		result = digits
+	}
+	return result
+}
+
+/**
+给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+ */
+func twoSum(nums []int, target int) []int {
+	m := make(map[int]int)
+	result := []int{}
+	for i,k := range nums{
+		if value,exist := m[target - k];exist {
+			result = append(result, value)
+			result = append(result, i)
+		}
+		m[k] = i
+	}
+	return result
+}
+
 func main()  {
 	// 两个数组的交集
 	//num1 := []int{1,2,3,4,4,13}
@@ -185,5 +230,11 @@ func main()  {
 	//fmt.Println("修改后数组长度", val)
 	//fmt.Println("修改后数组值", newNums)
 
+	// 加一
+	//nums := []int{9,9,9}
+	//fmt.Println(plusOne(nums))
 
+	// 两数之和
+	nums := []int{2, 7, 11, 15}
+	fmt.Println(twoSum(nums, 9))
 }
