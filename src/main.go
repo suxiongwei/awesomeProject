@@ -389,7 +389,7 @@ func testRecover()  {
 只有package名称为main的包可以包含main()函数。
 func main()是程序入口。所有Go函数以关键字func开头，每一个可执行程序都必须包含main()函数，通常是程序启动后第一个执行的函数
 */
-func main()  {
+func main1()  {
 	//fmt.Println("Hello, World!")
 	//test()
 

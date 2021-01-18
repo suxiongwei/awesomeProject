@@ -183,7 +183,7 @@ func twoSum(nums []int, target int) []int {
 	return result
 }
 
-func main()  {
+func main5()  {
 	// 两个数组的交集
 	//num1 := []int{1,2,3,4,4,13}
 	//num2 := []int{1,3,2,9,10}
