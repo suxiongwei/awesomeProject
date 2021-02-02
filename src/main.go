@@ -3,19 +3,18 @@ package main
 import (
 	"fmt"
 	"time"
-	"os"
 )
 
 // 有init()函数则会先执行init()函数
-func init()  {
+func init() {
 	fmt.Println("Init")
 }
 
-func test()  {
+func test() {
 	/**
 	使用 := 赋值操作符可以高效地创建一个新的变量，变量类型将由编译器自动推断。
 	这是声明变量的首选形式，但是它只能被用在函数体内，而不可以用于全局变量的声明与赋值。
-	 */
+	*/
 	s := 1
 	fmt.Println(s)
 
@@ -30,7 +29,7 @@ func test()  {
 }
 
 func GetData() (int, int) {
-	return 10,20
+	return 10, 20
 }
 
 // 常量组中如果不指定类型和初始值，则与上一行非空常量的值相同
@@ -46,7 +45,7 @@ const (
 	iotac
 )
 
-func test1()  {
+func test1() {
 	var a int8 = 4
 	var ptr = &a
 
@@ -56,12 +55,12 @@ func test1()  {
 
 }
 
-func testIf()  {
-	if  a := 10; a > 10{
+func testIf() {
+	if a := 10; a > 10 {
 		fmt.Println("大于十")
-	}else if a == 10{
+	} else if a == 10 {
 		fmt.Println("等于十")
-	}else {
+	} else {
 		fmt.Println("小于十")
 	}
 }
@@ -89,12 +88,12 @@ func testFor() {
 			break
 		}
 		fmt.Printf("%d ", i)
-		i ++
+		i++
 	}
 
 	// for关键字后无表达式，效果与其他编程语言的for(;;) {}一致，此时for执行无限循环。
 	j := 0
-	for  {
+	for {
 		// 跳出循环
 		if j > 11 {
 			break
@@ -109,7 +108,7 @@ func testFor() {
 	array、slice、string返回索引和值；
 	map返回键和值；
 	channel只返回通道内的值
-	 */
+	*/
 	str := "123ABCabc苏"
 	for i, value := range str {
 		fmt.Printf("第 %d 的ASCLL值=%d, 字符是%c \n", i, value, value)
@@ -118,37 +117,37 @@ func testFor() {
 
 /**
 接受不定数量的参数
- */
-func testFun(arg...int8)  {
-	
+*/
+func testFun(arg ...int8) {
+
 }
 
 /**
 测试函数
- */
+*/
 // 声明一个函数类型
 type processFunc func(int) bool
 
 // 判断元素是否为偶数
-func isEven(integer int)  bool{
-	if integer % 2 ==0 {
+func isEven(integer int) bool {
+	if integer%2 == 0 {
 		return true
 	}
 	return false
 }
 
 // 判断元素是否为奇数
-func isOdd(integer int)  bool{
-	if integer % 2 == 0 {
+func isOdd(integer int) bool {
+	if integer%2 == 0 {
 		return false
 	}
 	return true
 }
 
 // 根据函数来处理切片，根据元素奇偶数分组，返回新的切片
-func filter(slice []int, f processFunc) []int{
+func filter(slice []int, f processFunc) []int {
 	var result []int
-	for _,value := range slice{
+	for _, value := range slice {
 		if f(value) {
 			result = append(result, value)
 		}
@@ -156,33 +155,33 @@ func filter(slice []int, f processFunc) []int{
 	return result
 }
 
-func visit(list []float64, f func(float64))  {
-	for _,value := range list{
+func visit(list []float64, f func(float64)) {
+	for _, value := range list {
 		f(value)
 	}
 }
 
-func testArray()  {
+func testArray() {
 	// 如果忽略 [] 中的数字，不设置数组长度，Go语言会根据元素的个数来设置数组的长度。可以忽略声明中数组的长度并将其替换为“…”。编译器会自动计算长度。
-	array := [...]int{1,2,3,4}
+	array := [...]int{1, 2, 3, 4}
 	fmt.Println(array)
 	fmt.Printf("数组长度 %d\n", len(array))
 
 	// 遍历数组方式一
-	for i := 0; i < len(array); i++{
+	for i := 0; i < len(array); i++ {
 		fmt.Println(array[i])
 	}
 
 	fmt.Println()
 
 	// 遍历数组方式二
-	for _,value := range array{
+	for _, value := range array {
 		fmt.Println(value)
 	}
 }
 
-func testSlice()  {
-	arr0 := [...]string{"a","b","c","d","e","f","g","h","i","j","k"}
+func testSlice() {
+	arr0 := [...]string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"}
 	fmt.Println("cap(arr0)", cap(arr0), arr0)
 
 	// 截取数组形成切片,arr中从下标startIndex到endIndex-1下的元素创建为一个新的切片（前闭后开），长度为endIndex-startIndex。
@@ -191,9 +190,9 @@ func testSlice()  {
 	fmt.Println("cap(s01)", cap(arr0), s01)
 }
 
-func testMap()  {
+func testMap() {
 	// 短变量声明初始化时间
-	rating := map[string]float64{"c":5, "Go":4.5, "Python":4.5, "C++":3}
+	rating := map[string]float64{"c": 5, "Go": 4.5, "Python": 4.5, "C++": 3}
 	fmt.Println(rating)
 
 	// 创建map后赋值
@@ -202,25 +201,25 @@ func testMap()  {
 	countryMap["Japan"] = "Tokyo"
 
 	// 遍历Map
-	for k,v := range countryMap{
+	for k, v := range countryMap {
 		fmt.Println("国家：", k, "首都", v)
 	}
 
 	// 只展示value
-	for _,v := range countryMap{
-		fmt.Println( "首都", v)
+	for _, v := range countryMap {
+		fmt.Println("首都", v)
 	}
 
 	// 只展示key
-	for k := range countryMap{
-		fmt.Println( "国家", k)
+	for k := range countryMap {
+		fmt.Println("国家", k)
 	}
 
 	// 判断元素是否存在
-	value,ok := countryMap["China"]
+	value, ok := countryMap["China"]
 	fmt.Println("China是否存在", value, ok)
 
-	value1,ok := countryMap["English"]
+	value1, ok := countryMap["English"]
 	fmt.Println("China是否存在", value1, ok)
 
 	delete(countryMap, "China")
@@ -230,11 +229,12 @@ func testMap()  {
 	countryMap = make(map[string]string)
 	fmt.Println(countryMap)
 }
+
 // 结构体
 type Teacher struct {
 	name string
-	age int8
-	sex byte
+	age  int8
+	sex  byte
 }
 
 // 结构体的匿名字段
@@ -249,8 +249,8 @@ type Address struct {
 }
 
 type Person struct {
-	name string
-	age int8
+	name    string
+	age     int8
 	address *Address
 }
 
@@ -261,12 +261,12 @@ type Student struct {
 }
 
 type Employee struct {
-	name,currency string
-	salary float64
+	name, currency string
+	salary         float64
 }
 
 // 方法
-func (e Employee)printSalary()  {
+func (e Employee) printSalary() {
 	fmt.Printf("员工姓名：%s, 薪资：%s%.2f \n", e.name, e.currency, e.salary)
 }
 
@@ -286,30 +286,30 @@ type AndroidPhone struct {
 type Iphone struct {
 }
 
-func (a AndroidPhone) call()  {
+func (a AndroidPhone) call() {
 	fmt.Println("我是安卓手机 我信号牛皮")
 }
 
-func (a Iphone) call()  {
+func (a Iphone) call() {
 	fmt.Println("我是苹果手机 我信号垃圾")
 }
 
 // 测试异常
-func testError()  {
+func testError() {
 	res, err := Divide(100, 0)
-	if err != nil{
+	if err != nil {
 		fmt.Println(err)
-	}else {
+	} else {
 		fmt.Println(res)
 	}
 }
 
-func Divide(dividee float64, divider float64)(float64, error)  {
-	if divider == 0{
+func Divide(dividee float64, divider float64) (float64, error) {
+	if divider == 0 {
 		//return 0, errors.New("出错，除数不可以为0")
 		return 0, MyError{time.Now(), "出错，除数不可以为0"}
-	}else {
-		return dividee /divider, nil
+	} else {
+		return dividee / divider, nil
 	}
 }
 
@@ -324,25 +324,25 @@ func (e MyError) Error() string {
 }
 
 // 测试defer
-func testDefer()  {
+func testDefer() {
 	defer funA()
 	funB()
 	defer funC()
 	fmt.Println("testDefer执行结束")
 }
 
-func funA()  {
+func funA() {
 	fmt.Println("这是funA")
 }
-func funB()  {
+func funB() {
 	fmt.Println("这是funB")
 }
-func funC()  {
+func funC() {
 	fmt.Println("这是funC")
 }
 
 // 测试defer参数,延迟函数的参数在执行延迟语句时被执行，而不是在执行实际的函数调用时执行。
-func testDeferParameter()  {
+func testDeferParameter() {
 	a := 1
 	b := 2
 	// 执行延迟函数的时候 a,b 分别未1，2 而不是实际调用的时候复制未11，12
@@ -353,21 +353,21 @@ func testDeferParameter()  {
 	printAdd(a, b, false)
 }
 
-func printAdd(a, b int, flag bool)  {
+func printAdd(a, b int, flag bool) {
 	if flag {
 		fmt.Println("延迟执行函数，参数a，b分别为%d,%d", a, b)
-	}else {
+	} else {
 		fmt.Println("未延迟执行函数，参数a，b分别为%d,%d", a, b)
 	}
 }
 
-func testPanic()  {
+func testPanic() {
 	fmt.Println("Hello, World!")
 	panic("发生致命错误")
 	fmt.Println("over")
 }
 
-func testRecover()  {
+func testRecover() {
 	defer func() {
 		if msg := recover(); msg != nil {
 			fmt.Println("恢复啦，获取recover的返回值:", msg)
@@ -375,7 +375,7 @@ func testRecover()  {
 	}()
 	fmt.Println("testRecover")
 
-	for i := 0; i < 10; i++{
+	for i := 0; i < 10; i++ {
 		fmt.Println("当前i值", i)
 
 		if i == 5 {
@@ -384,12 +384,11 @@ func testRecover()  {
 	}
 }
 
-
 /**
 只有package名称为main的包可以包含main()函数。
 func main()是程序入口。所有Go函数以关键字func开头，每一个可执行程序都必须包含main()函数，通常是程序启动后第一个执行的函数
 */
-func main1()  {
+func main() {
 	//fmt.Println("Hello, World!")
 	//test()
 
@@ -480,7 +479,6 @@ func main1()  {
 	//t4 := Teacher{ "iven",32,1}
 	//fmt.Println(t4)
 
-
 	// 匿名结构体 这个相比Java就简洁的多，在定义接口返回值时，可以不用去定义一个类
 	//addr := struct {
 	//	province, city string
@@ -538,12 +536,14 @@ func main1()  {
 	//testRecover()
 
 	// 创建目录
-	fileName := "/Users/smzdm/Desktop/test"
-	err := os.Mkdir(fileName, os.ModePerm)
-	if err != nil{
-		fmt.Println("err:", err.Error())
-	}else {
-		fmt.Println("创建目录成功")
-	}
-}
+	// fileName := "/Users/smzdm/Desktop/test"
+	// err := os.Mkdir(fileName, os.ModePerm)
+	// if err != nil {
+	// 	fmt.Println("err:", err.Error())
+	// } else {
+	// 	fmt.Println("创建目录成功")
+	// }
 
+	str := "str1" + "str2"
+	fmt.Println(str)
+}

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 )
 /**
@@ -183,7 +184,74 @@ func twoSum(nums []int, target int) []int {
 	return result
 }
 
-func main5()  {
+// Z字形变换（6）
+func convertZ(s string, numPows int) string {
+	if numPows == 1 {
+		return s
+	}
+	// 用来处理unicode或utf-8字符
+	var b = []rune(s)
+	var res = make([]string, numPows)
+	var length = len(b)
+	// 2n-2 为一个周期
+	var period = numPows * 2 - 2
+	for i := 0; i < length; i++{
+		var mod = i % period
+		// 在周期内，正着走 numRows-1 下，剩余的反着走
+		if mod < numPows {
+			res[mod] += string(b[i])
+		}else {
+			res[period - mod] += string(b[i])
+		}
+	}
+
+	return strings.Join(res, "")
+}
+
+// 三数之和（15）
+func threeSum(nums []int) string {
+	sort.Ints(nums)
+	length := len(nums)
+	res := []string{}
+
+	for i := 0;i < length; i++{
+		target := 0 - nums[i]
+		// 左边的指针
+		left := i + 1
+		// 右边的指针
+		right := length - 1
+
+		// 如果固定下来的数本身就大于 0，那三数之和必然无法等于 0
+		if nums[i] > 0 {
+			break
+		}
+		if i == 0 || nums[i] != nums[i - 1]{
+			// 因为已经排好序 如果和大于0，那就说明 right 的值太大，需要左移。如果和小于0，那就说明 left 的值太小，需要右移
+			for(left < right){
+				if nums[left] + nums[right] ==  target{
+					tmp := []string{strconv.Itoa(nums[i]), strconv.Itoa(nums[left]), strconv.Itoa(nums[right])}
+					res = append(res, strings.Join(tmp, "_"))
+					// 对重复值的处理
+					for left < right && nums[left] == nums[left+1]{
+						left++
+					}
+					for left < right && nums[right] == nums[right-1]{
+						right--
+					}
+					left++
+					right--
+				}else if nums[left] + nums[right] < target {
+					left++
+				}else {
+					right--
+				}
+			}
+		}
+	}
+	return strings.Join(res, "/")
+}
+
+func main10() {
 	// 两个数组的交集
 	//num1 := []int{1,2,3,4,4,13}
 	//num2 := []int{1,3,2,9,10}
@@ -193,7 +261,6 @@ func main5()  {
 	//
 	//result1 := intersect1(num1, num2)
 	//fmt.Println(result1)
-
 
 	// 最长公共前缀
 	//strs := []string{"flower","flow","flight"}
@@ -235,6 +302,14 @@ func main5()  {
 	//fmt.Println(plusOne(nums))
 
 	// 两数之和
-	nums := []int{2, 7, 11, 15}
-	fmt.Println(twoSum(nums, 9))
+	//nums := []int{2, 7, 11, 15}
+	//fmt.Println(twoSum(nums, 9))
+
+	// Z字形变换（6） 结果输出：LDREOEIIECIHNTSG
+	//s := "LEETCODEISHIRING"
+	//fmt.Println(convertZ(s, 4))
+
+	// 三数之和（15）
+	nums := []int{-1, 0, 1, 2, -1, -4}
+	fmt.Println(threeSum(nums))
 }
